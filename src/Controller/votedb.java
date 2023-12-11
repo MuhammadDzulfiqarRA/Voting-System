@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author alang
  */
-public class votedb {
+public class VoteDB {
   private static final String DB_URL = "jdbc:mysql://localhost:3306/votedb";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";

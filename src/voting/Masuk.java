@@ -15,10 +15,14 @@ import javax.swing.JOptionPane;
  * @author alang
  */
 public class Masuk extends javax.swing.JFrame {
+
+    private VoteDB voteDB;
     /**
      * Creates new form Masuk
      */
     public Masuk() {
+        voteDB = new VoteDB();
+        initComponents();
     }
 
     /**

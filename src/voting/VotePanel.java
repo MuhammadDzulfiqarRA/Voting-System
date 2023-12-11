@@ -152,7 +152,7 @@ public class VotePanel extends javax.swing.JFrame {
         int jawaban = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin?");
         if (jawaban == JOptionPane.YES_OPTION) {
             // Update database voting
-            votedb.vote(nama, getUmurFromDatabase(nik), nik, nomorUrut);
+            VoteDB.vote(nama, getUmurFromDatabase(nik), nik, nomorUrut);
             JOptionPane.showMessageDialog(this, "Terima kasih atas partisipasi Anda!");
             sudahMemilih = true;
             this.dispose();
