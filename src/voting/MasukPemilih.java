@@ -117,24 +117,24 @@ public class MasukPemilih extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String nama = jTextField2.getText();
-        String nik = jTextField1.getText();
+        String password = jTextField1.getText();
         
         // Verifikasi NIK dan umur
-        if (verifikasiNikDanUmur(nik, nama)) {
+        if (verifikasiNikDanUmur(password, nama)) {
             // NIK dan umur valid, lanjutkan ke form selanjutnya
-            DashboardPemilih utamaPanel = new DashboardPemilih(nik, nama);
+            DashboardPemilih utamaPanel = new DashboardPemilih(password, nama);
             utamaPanel.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private boolean verifikasiNikDanUmur(String nik, String nama) {
+    private boolean verifikasiNikDanUmur(String password, String nama) {
     try (Connection connection = VoteDB.getConnection()) {
-        // Lakukan verifikasi terhadap nama dan NIK pada tabel 'masuk'
+        // Lakukan verifikasi terhadap nama dan password pada tabel 'masuk'
         String queryMasuk = "SELECT * FROM masuk WHERE password = ? AND username = ?";
 
         try (PreparedStatement masukStatement = connection.prepareStatement(queryMasuk)) {
-            masukStatement.setString(1, nik);
+            masukStatement.setString(1, password);
             masukStatement.setString(2, nama);
 
             try (ResultSet masukResultSet = masukStatement.executeQuery()) {
@@ -143,7 +143,7 @@ public class MasukPemilih extends javax.swing.JFrame {
                     String queryVotdb = "SELECT umur FROM votdb WHERE password = ?";
                     
                     try (PreparedStatement votdbStatement = connection.prepareStatement(queryVotdb)) {
-                        votdbStatement.setString(1, nik);
+                        votdbStatement.setString(1, password);
 
                         try (ResultSet votdbResultSet = votdbStatement.executeQuery()) {
                             if (votdbResultSet.next()) {
@@ -157,7 +157,7 @@ public class MasukPemilih extends javax.swing.JFrame {
                                 } else {
                                     JOptionPane.showMessageDialog(this, "Terverifikasi");
                                     // Beralih ke DashboardPemilih setelah verifikasi
-                                    DashboardPemilih utamaPanel = new DashboardPemilih(nik, nama);
+                                    DashboardPemilih utamaPanel = new DashboardPemilih(password, nama);
                                     utamaPanel.setVisible(true);
                                     // Menutup frame saat ini (MasukPemilih)
                                     this.dispose();

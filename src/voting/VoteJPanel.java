@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package voting;
 
@@ -9,23 +9,23 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 /**
  *
  * @author alang
  */
-public class VoteJPanel extends javax.swing.JPanel {
+public class VoteJPanel extends javax.swing.JFrame {
+
     private VoteDB voteDB;
-    private String nik;
-    private String nama;
+    private String password;
+    private String username;
     private boolean sudahMemilih = false;
     /**
-     * Creates new form VoteJPanel
+     * Creates new form VoteJPanel1
      */
-    public VoteJPanel(String nik, String nama) {
+    public VoteJPanel(String password, String username) {
         voteDB = new VoteDB();
-        this.nik = nik;
-        this.nama = nama;
+        this.password = password;
+        this.username = username;
         initComponents();
     }
 
@@ -43,6 +43,8 @@ public class VoteJPanel extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         Btn1 = new javax.swing.JButton();
         Btn2 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Btn3.setFont(new java.awt.Font("Cambria Math", 1, 24)); // NOI18N
         Btn3.setText("3");
@@ -84,8 +86,8 @@ public class VoteJPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -119,6 +121,8 @@ public class VoteJPanel extends javax.swing.JPanel {
                 .addComponent(jButton4)
                 .addGap(23, 23, 23))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void Btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn3ActionPerformed
@@ -132,6 +136,12 @@ public class VoteJPanel extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+         // Kembali ke menu DashboardPemilih
+        DashboardPemilih dashboard = new DashboardPemilih(password, username); // Sesuaikan dengan konstruktor DashboardPemilih
+        dashboard.setVisible(true);
+
+        // Tutup frame saat ini (VoteJPanel)
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void Btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn1ActionPerformed
@@ -156,7 +166,7 @@ public class VoteJPanel extends javax.swing.JPanel {
         int jawaban = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin?");
         if (jawaban == JOptionPane.YES_OPTION) {
             // Update database voting
-            VoteDB.vote(nama, getUmurFromDatabase(nik), nik, nomorUrut);
+            VoteDB.vote(username, getUmurFromDatabase(password), password, nomorUrut);
             JOptionPane.showMessageDialog(this, "Terima kasih atas partisipasi Anda!");
             sudahMemilih = true;
 
@@ -178,10 +188,57 @@ public class VoteJPanel extends javax.swing.JPanel {
 //            frame.repaint();
         }
     }
-    private int getUmurFromDatabase(String nik) {
+    private int getUmurFromDatabase(String password) {
         // Ambil umur dari database berdasarkan NIK
         // Implementasikan akses database sesuai kebutuhan
         return 17; // Contoh umur sederhana untuk keperluan demonstrasi
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VoteJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VoteJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VoteJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VoteJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VoteJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            String password = "ContohNIK";
+            String username = "ContohNama";
+            new VoteJPanel(password, username).setVisible(true);
+        }
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

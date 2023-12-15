@@ -320,7 +320,7 @@ public class DashboardPemilih extends javax.swing.JFrame {
         // TODO add your handling code here:
         VoteJPanel voteJPanel = new VoteJPanel(nik, nama);
         voteJPanel.setVisible(true);
-        //        this.dispose();
+                this.dispose();
     }//GEN-LAST:event_BtnVoteActionPerformed
 
     /**
