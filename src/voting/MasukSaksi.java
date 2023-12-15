@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package voting;
 
 import java.sql.Connection;
@@ -10,13 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-/**
- *
- * @author alang
- */
+
 public class MasukSaksi extends javax.swing.JFrame {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/votedb";
+    private static final String URL = "jdbc:mysql://localhost:3306/voting";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
     /**
@@ -144,7 +137,7 @@ public class MasukSaksi extends javax.swing.JFrame {
         // Pengecekan login
             if (checkLogin(username, password)) {
                 // Jika login sukses, beralih ke dashboard saksi
-                DashboardSaksi dashboardSaksi = new DashboardSaksi();
+                DashboardAdmin dashboardSaksi = new DashboardAdmin();
                 dashboardSaksi.setUsrnm(username);
                 dashboardSaksi.setVisible(true);
                 this.dispose();

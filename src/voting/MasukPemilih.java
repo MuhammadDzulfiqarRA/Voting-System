@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package voting;
 
 import Controller.VoteDB;
@@ -12,10 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-/**
- *
- * @author alang
- */
+
 public class MasukPemilih extends javax.swing.JFrame {
     private VoteDB voteDB;
     /**
@@ -122,7 +115,7 @@ public class MasukPemilih extends javax.swing.JFrame {
         // Verifikasi NIK dan umur
         if (verifikasiNikDanUmur(password, nama)) {
             // NIK dan umur valid, lanjutkan ke form selanjutnya
-            DashboardPemilih utamaPanel = new DashboardPemilih(password, nama);
+            DashboardPemilih utamaPanel = new DashboardPemilih();
             utamaPanel.setVisible(true);
             this.dispose();
         }
@@ -131,7 +124,7 @@ public class MasukPemilih extends javax.swing.JFrame {
     private boolean verifikasiNikDanUmur(String password, String nama) {
     try (Connection connection = VoteDB.getConnection()) {
         // Lakukan verifikasi terhadap nama dan password pada tabel 'masuk'
-        String queryMasuk = "SELECT * FROM masuk WHERE password = ? AND username = ?";
+        String queryMasuk = "SELECT * FROM pemilih WHERE password = ? AND username = ?";
 
         try (PreparedStatement masukStatement = connection.prepareStatement(queryMasuk)) {
             masukStatement.setString(1, password);
@@ -140,7 +133,7 @@ public class MasukPemilih extends javax.swing.JFrame {
             try (ResultSet masukResultSet = masukStatement.executeQuery()) {
                 if (masukResultSet.next()) {
                     // Data ditemukan di tabel 'masuk', lanjutkan verifikasi umur pada tabel 'votdb'
-                    String queryVotdb = "SELECT umur FROM votdb WHERE password = ?";
+                    String queryVotdb = "SELECT umur FROM pemilih WHERE password = ?";
                     
                     try (PreparedStatement votdbStatement = connection.prepareStatement(queryVotdb)) {
                         votdbStatement.setString(1, password);
@@ -157,7 +150,7 @@ public class MasukPemilih extends javax.swing.JFrame {
                                 } else {
                                     JOptionPane.showMessageDialog(this, "Terverifikasi");
                                     // Beralih ke DashboardPemilih setelah verifikasi
-                                    DashboardPemilih utamaPanel = new DashboardPemilih(password, nama);
+                                    DashboardPemilih utamaPanel = new DashboardPemilih();
                                     utamaPanel.setVisible(true);
                                     // Menutup frame saat ini (MasukPemilih)
                                     this.dispose();

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package voting;
 
 import Controller.VoteDB;
@@ -9,16 +5,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-/**
- *
- * @author alang
- */
 public class VoteJPanel extends javax.swing.JFrame {
-
+    
     private VoteDB voteDB;
     private String password;
     private String username;
     private boolean sudahMemilih = false;
+    private User user = Masuk.user;
     /**
      * Creates new form VoteJPanel1
      */
@@ -26,6 +19,7 @@ public class VoteJPanel extends javax.swing.JFrame {
         voteDB = new VoteDB();
         this.password = password;
         this.username = username;
+        
         initComponents();
     }
 
@@ -137,7 +131,7 @@ public class VoteJPanel extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
          // Kembali ke menu DashboardPemilih
-        DashboardPemilih dashboard = new DashboardPemilih(password, username); // Sesuaikan dengan konstruktor DashboardPemilih
+        DashboardPemilih dashboard = new DashboardPemilih(); // Sesuaikan dengan konstruktor DashboardPemilih
         dashboard.setVisible(true);
 
         // Tutup frame saat ini (VoteJPanel)

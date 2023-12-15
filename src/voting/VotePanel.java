@@ -1,23 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package voting;
+import Controller.VoteDB;
 import javax.swing.JOptionPane;
-/**
- *
- * @author alang
- */
-public class VotePanel extends javax.swing.JFrame {
-    private final String nik;
-    private final String nama;
+
+public class VotePanel extends javax.swing.JFrame{
+    
+    private String nik = Masuk.user.getNik();
+    private String nama = Masuk.user.getNama();
     private boolean sudahMemilih = false;
     /**
      * Creates new form VotePanel
      */
-    public VotePanel(String nik, String nama) {
-        this.nik = nik;
-        this.nama = nama;
+    public VotePanel() {
         initComponents();
     }
 

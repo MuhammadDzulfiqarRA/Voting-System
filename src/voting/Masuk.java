@@ -1,21 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package voting;
 
-import Controller.votedb;
+import Controller.VoteDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-/**
- *
- * @author alang
- */
-public class Masuk extends javax.swing.JFrame {
 
+public class Masuk extends javax.swing.JFrame {
+    public static User user;
+    public static Admin admin;
     private VoteDB voteDB;
     /**
      * Creates new form Masuk
@@ -121,14 +115,15 @@ public class Masuk extends javax.swing.JFrame {
         // Verifikasi NIK dan umur
         if (verifikasiNikDanUmur(nik, nama)) {
             // NIK dan umur valid, lanjutkan ke form selanjutnya
-            Utama utamaForm = new Utama(nik, nama);
+            // Utama utamaForm = new Utama(nik, nama);
+            Utama utamaForm = new Utama();
             utamaForm.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private boolean verifikasiNikDanUmur(String nik, String nama) {
-    try (Connection connection = votedb.getConnection()) {
+    try (Connection connection = VoteDB.getConnection()) {
         // Lakukan verifikasi terhadap nama dan NIK pada tabel 'masuk'
         String queryMasuk = "SELECT * FROM masuk WHERE nik = ? AND nama = ?";
 
@@ -139,10 +134,9 @@ public class Masuk extends javax.swing.JFrame {
             try (ResultSet masukResultSet = masukStatement.executeQuery()) {
                 if (masukResultSet.next()) {
                     // Data ditemukan di tabel 'masuk', lanjutkan verifikasi umur pada tabel 'votdb'
-                    String queryVotdb = "SELECT umur FROM votdb WHERE nik = ?";
+                    String queryVotdb = "SELECT umur FROM votdb WHERE vote_number = null";
                     
                     try (PreparedStatement votdbStatement = connection.prepareStatement(queryVotdb)) {
-                        votdbStatement.setString(1, nik);
 
                         try (ResultSet votdbResultSet = votdbStatement.executeQuery()) {
                             if (votdbResultSet.next()) {
