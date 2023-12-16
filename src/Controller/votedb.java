@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Controller;
 
 import java.sql.Connection;
@@ -24,45 +28,40 @@ public class VoteDB {
 
     public static void vote(String nama, int umurFromDatabase, String nik, int nomorUrut) {
         try {
-            // Cek login
-            if (checkLogin(nik, "")) {
-                // Cek apakah nik sudah terdaftar di tabel 'masuk'
-                if (isNikRegistered(nik)) {
-                    // Cek umur pengguna
-                    if (umurFromDatabase < 17) {
-                        JOptionPane.showMessageDialog(null, "Tidak bisa melakukan voting - Umur tidak mencukupi");
-                    } else {
-                        // Cek apakah nik sudah memilih sebelumnya
-                        if (!hasVoted(nik)) {
-                            // Lakukan proses voting
-                            String insertVoteQuery = "UPDATE pemilih SET vote_number = ? WHERE nik = ?";
-                            try (PreparedStatement insertVoteStatement = conn.prepareStatement(insertVoteQuery)) {
-                                insertVoteStatement.setInt(1, nomorUrut);
-                                insertVoteStatement.setString(2, nik);
-                                insertVoteStatement.executeUpdate();
-                                JOptionPane.showMessageDialog(null, "Terima kasih atas partisipasi Anda!");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Anda sudah memilih. Tidak dapat memilih lagi.");
-                        }
+        // Cek login
+        if (checkLogin(nik, "")) {
+            // Cek apakah nik sudah terdaftar di tabel 'masuk'
+            if (isNikRegistered(nik)) {
+                // Cek apakah nik sudah memilih sebelumnya
+                if (!hasVoted(nik)) {
+                    // Lakukan proses voting
+                    String insertVoteQuery = "INSERT INTO vote (nik, vote_number) VALUES (?, ?)";
+                    try (PreparedStatement insertVoteStatement = conn.prepareStatement(insertVoteQuery)) {
+                        insertVoteStatement.setString(1, nik);
+                        insertVoteStatement.setInt(2, nomorUrut);
+                        insertVoteStatement.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Terima kasih atas partisipasi Anda!");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Tidak terverifikasi - NIK tidak terdaftar di 'masuk'");
+                    JOptionPane.showMessageDialog(null, "Anda sudah memilih. Tidak dapat memilih lagi.");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Username atau Password salah", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Tidak terverifikasi - NIK tidak terdaftar di 'masuk'");
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Terjadi kesalahan dalam koneksi database: " + e.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(null, "Username atau Password salah", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Terjadi kesalahan dalam koneksi database: " + e.getMessage());
+    }
     }
 
-    private static boolean checkLogin(String nik, String nama) throws SQLException {
-        // Query untuk memeriksa keberadaan nik dan nama pada tabel masuk
-        String query = "SELECT * FROM pemilih WHERE nik = ? AND nama = ?";
+    private static boolean checkLogin(String username, String password) throws SQLException {
+        // Query untuk memeriksa keberadaan username dan password pada tabel masuk
+        String query = "SELECT * FROM masuk WHERE username=? AND password=?";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            preparedStatement.setString(1, nik);
-            preparedStatement.setString(2, nama);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
 
             // Eksekusi query
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -73,7 +72,7 @@ public class VoteDB {
     }
 
     private static boolean isNikRegistered(String nik) throws SQLException {
-        String query = "SELECT * FROM pemilih WHERE nik = ?";
+        String query = "SELECT * FROM masuk WHERE nik = ?";
         try (PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, nik);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -83,7 +82,7 @@ public class VoteDB {
     }
 
     private static boolean hasVoted(String nik) throws SQLException {
-        String query = "SELECT * FROM pemilih WHERE nik = ?";
+        String query = "SELECT * FROM vote WHERE nik = ?";
         try (PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, nik);
             try (ResultSet resultSet = statement.executeQuery()) {

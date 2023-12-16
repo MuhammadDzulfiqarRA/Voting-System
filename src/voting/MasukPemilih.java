@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package voting;
 
 import Controller.VoteDB;
@@ -8,7 +12,10 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-
+/**
+ *
+ * @author alang
+ */
 public class MasukPemilih extends javax.swing.JFrame {
     private VoteDB voteDB;
     /**
@@ -35,6 +42,7 @@ public class MasukPemilih extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +67,10 @@ public class MasukPemilih extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel5.setText("*harap masukkan NAMA dan NIK sesuai KTP");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -74,15 +86,17 @@ public class MasukPemilih extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3)
+                                .addComponent(jTextField1)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(101, 101, 101)
+                                .addComponent(jButton1))
                             .addComponent(jLabel4)
-                            .addComponent(jTextField2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel5))))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,15 +107,17 @@ public class MasukPemilih extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,18 +129,18 @@ public class MasukPemilih extends javax.swing.JFrame {
         String password = jTextField1.getText();
         
         // Verifikasi NIK dan umur
-        if (verifikasiNikDanUmur(password, nama)) {
+        if (verifikasiNik(password, nama)) {
             // NIK dan umur valid, lanjutkan ke form selanjutnya
-            DashboardPemilih utamaPanel = new DashboardPemilih();
+            DashboardPemilih utamaPanel = new DashboardPemilih(password, nama);
             utamaPanel.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private boolean verifikasiNikDanUmur(String password, String nama) {
+    private boolean verifikasiNik(String password, String nama) {
     try (Connection connection = VoteDB.getConnection()) {
         // Lakukan verifikasi terhadap nama dan password pada tabel 'masuk'
-        String queryMasuk = "SELECT * FROM pemilih WHERE password = ? AND username = ?";
+        String queryMasuk = "SELECT * FROM masuk WHERE password = ? AND username = ?";
 
         try (PreparedStatement masukStatement = connection.prepareStatement(queryMasuk)) {
             masukStatement.setString(1, password);
@@ -132,34 +148,13 @@ public class MasukPemilih extends javax.swing.JFrame {
 
             try (ResultSet masukResultSet = masukStatement.executeQuery()) {
                 if (masukResultSet.next()) {
-                    // Data ditemukan di tabel 'masuk', lanjutkan verifikasi umur pada tabel 'votdb'
-                    String queryVotdb = "SELECT umur FROM pemilih WHERE password = ?";
-                    
-                    try (PreparedStatement votdbStatement = connection.prepareStatement(queryVotdb)) {
-                        votdbStatement.setString(1, password);
-
-                        try (ResultSet votdbResultSet = votdbStatement.executeQuery()) {
-                            if (votdbResultSet.next()) {
-                                // Verifikasi umur
-                                java.util.Date currentDate = new java.util.Date();
-                                java.sql.Date umurDate = votdbResultSet.getDate("umur");
-                                int umur = (int) ((currentDate.getTime() - umurDate.getTime()) / (1000 * 60 * 60 * 24) / 365.25);
-
-                                if (umur < 17) {
-                                    JOptionPane.showMessageDialog(this, "Tidak bisa melakukan voting - Umur tidak mencukupi");
-                                } else {
-                                    JOptionPane.showMessageDialog(this, "Terverifikasi");
-                                    // Beralih ke DashboardPemilih setelah verifikasi
-                                    DashboardPemilih utamaPanel = new DashboardPemilih();
-                                    utamaPanel.setVisible(true);
-                                    // Menutup frame saat ini (MasukPemilih)
-                                    this.dispose();
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "Data umur tidak ditemukan untuk NIK ini");
-                            }
-                        }
-                    }
+                    JOptionPane.showMessageDialog(this, "Terverifikasi");
+                    // Beralih ke DashboardPemilih setelah verifikasi
+                    DashboardPemilih utamaPanel = new DashboardPemilih(password, nama);
+                    utamaPanel.setVisible(true);
+                    // Menutup frame saat ini (MasukPemilih)
+                    this.dispose();
+                    return true;
                 } else {
                     JOptionPane.showMessageDialog(this, "Tidak terverifikasi - Nama atau NIK tidak terdaftar di 'masuk'");
                 }
@@ -213,6 +208,7 @@ public class MasukPemilih extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

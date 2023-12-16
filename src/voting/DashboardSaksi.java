@@ -1,18 +1,25 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package voting;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+/**
+ *
+ * @author alang
+ */
+public class DashboardSaksi extends javax.swing.JFrame {
 
-public class DashboardAdmin extends javax.swing.JFrame {
-    
+    private String usrnm;
     /**
      * Creates new form DashboardSaksi1
      */
-    public DashboardAdmin() {
+    public DashboardSaksi() {
         initComponents();
         startVoteCountThread();
     }
@@ -41,8 +48,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         voteCountThread.start();
     }
     private int getVoteCount(int voteNumber) {
-        // Implementasikan logika untuk mengambil jumlah vote dari database
-        // Kode simulasi:
         return voteNumber * 10;
     }
 
@@ -156,7 +161,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(52, 52, 52)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21))))
         );
@@ -178,8 +183,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    void setUsrnm(){
-            Usrnm.setText("Nama Saksi : " + Masuk.admin.getUsername());
+    void setUsrnm(String username) {
+            this.usrnm = username;
+            Usrnm.setText(username);
         }
     /**
      * @param args the command line arguments
@@ -198,13 +204,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashboardSaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashboardSaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashboardSaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashboardSaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -212,7 +218,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DashboardAdmin().setVisible(true);
+                new DashboardSaksi().setVisible(true);
             }
         });
     }

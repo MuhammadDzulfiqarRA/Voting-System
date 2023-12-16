@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package voting;
 
 import Controller.VoteDB;
@@ -5,13 +9,15 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+/**
+ *
+ * @author alang
+ */
 public class VoteJPanel extends javax.swing.JFrame {
-    
     private VoteDB voteDB;
     private String password;
     private String username;
     private boolean sudahMemilih = false;
-    private User user = Masuk.user;
     /**
      * Creates new form VoteJPanel1
      */
@@ -19,10 +25,8 @@ public class VoteJPanel extends javax.swing.JFrame {
         voteDB = new VoteDB();
         this.password = password;
         this.username = username;
-        
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,6 +41,7 @@ public class VoteJPanel extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         Btn1 = new javax.swing.JButton();
         Btn2 = new javax.swing.JButton();
+        loginsession = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,6 +85,19 @@ public class VoteJPanel extends javax.swing.JFrame {
             }
         });
 
+        loginsession.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout loginsessionLayout = new javax.swing.GroupLayout(loginsession);
+        loginsession.setLayout(loginsessionLayout);
+        loginsessionLayout.setHorizontalGroup(
+            loginsessionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        loginsessionLayout.setVerticalGroup(
+            loginsessionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 24, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,20 +116,25 @@ public class VoteJPanel extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton4)))
+                        .addComponent(jButton4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(loginsession, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(7, 7, 7)
+                .addComponent(loginsession, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(23, 23, 23))
         );
@@ -131,10 +154,8 @@ public class VoteJPanel extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
          // Kembali ke menu DashboardPemilih
-        DashboardPemilih dashboard = new DashboardPemilih(); // Sesuaikan dengan konstruktor DashboardPemilih
+        DashboardPemilih dashboard = new DashboardPemilih(password, username); // Sesuaikan dengan konstruktor DashboardPemilih
         dashboard.setVisible(true);
-
-        // Tutup frame saat ini (VoteJPanel)
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -160,32 +181,13 @@ public class VoteJPanel extends javax.swing.JFrame {
         int jawaban = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin?");
         if (jawaban == JOptionPane.YES_OPTION) {
             // Update database voting
-            VoteDB.vote(username, getUmurFromDatabase(password), password, nomorUrut);
+            VoteDB.vote(username, getNikFromDatabase(password), password, nomorUrut);
             JOptionPane.showMessageDialog(this, "Terima kasih atas partisipasi Anda!");
             sudahMemilih = true;
-
-//            // Update database voting
-//            VoteDB.vote(nama, getUmurFromDatabase(nik), nik, nomorUrut);
-//            JOptionPane.showMessageDialog(this, "Terverifikasi");
-//            sudahMemilih = true;
-//
-//            // Ambil frame yang mengandung panel ini
-//            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//
-//            // Beralih ke UtamaPanel setelah verifikasi
-//            UtamaPanel utamaPanel = new UtamaPanel(nik, nama);
-//
-//            // Gantikan panel UtamaPanel yang mungkin ada di frame
-//            frame.getContentPane().removeAll();
-//            frame.getContentPane().add(utamaPanel);
-//            frame.revalidate();
-//            frame.repaint();
         }
     }
-    private int getUmurFromDatabase(String password) {
-        // Ambil umur dari database berdasarkan NIK
-        // Implementasikan akses database sesuai kebutuhan
-        return 17; // Contoh umur sederhana untuk keperluan demonstrasi
+    private int getNikFromDatabase(String password) {
+        return 17;
     }
     /**
      * @param args the command line arguments
@@ -241,5 +243,6 @@ public class VoteJPanel extends javax.swing.JFrame {
     private javax.swing.JButton Btn3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel loginsession;
     // End of variables declaration//GEN-END:variables
 }
