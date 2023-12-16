@@ -1,53 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package voting;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
-/**
- *
- * @author alang
- */
-public class MasukSaksi extends javax.swing.JFrame {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/votedb";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+import controller.VoteDB;
+
+public class LoginAdmin extends javax.swing.JFrame {
+
+    public static Admin admin;
+    private VoteDB voteDB;
     /**
      * Creates new form MasukAdmin
      */
-    public MasukSaksi() {
+    public LoginAdmin() {
+        admin = new Admin();
+        voteDB = new VoteDB();
         initComponents();
     }
-    private boolean checkLogin(String username, String password) {
-        try {
-            // Koneksi ke database
-            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            // Query untuk memeriksa keberadaan username dan password pada tabel masuk
-            String query = "SELECT * FROM masuk WHERE username=? AND password=?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
-
-                // Eksekusi query
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                // Jika hasil query mengandung baris, maka username dan password benar
-                return resultSet.next();
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Terjadi kesalahan dalam koneksi database: " + e.getMessage());
-            return false;
-        }
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +25,7 @@ public class MasukSaksi extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Pswd = new javax.swing.JTextField();
@@ -64,7 +33,7 @@ public class MasukSaksi extends javax.swing.JFrame {
         Usrnm = new javax.swing.JTextField();
         Kfrm2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel2.setText("Silahkan masukkan identitas lengkap anda!");
@@ -135,28 +104,25 @@ public class MasukSaksi extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void Kfrm2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Kfrm2ActionPerformed
         // TODO add your handling code here:
         String username = Usrnm.getText();
         String password = Pswd.getText();
 
         // Pengecekan login
-            if (checkLogin(username, password)) {
+            if (voteDB.checkLoginAdmin(username, password)) {
                 // Jika login sukses, beralih ke dashboard saksi
-                DashboardSaksi dashboardSaksi = new DashboardSaksi();
-                dashboardSaksi.setUsrnm(username);
-                dashboardSaksi.setVisible(true);
+                DashboardAdmin dashboardAdmin = new DashboardAdmin();
+                dashboardAdmin.setVisible(true);
                 this.dispose();
             } else {
                 // Jika login gagal, tampilkan alert
                 JOptionPane.showMessageDialog(this, "Username atau Password salah", "Error", JOptionPane.ERROR_MESSAGE);
             }
-    }//GEN-LAST:event_Kfrm2ActionPerformed
+    }
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -171,13 +137,13 @@ public class MasukSaksi extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MasukSaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MasukSaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MasukSaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MasukSaksi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -185,7 +151,7 @@ public class MasukSaksi extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MasukSaksi().setVisible(true);
+                new LoginAdmin().setVisible(true);
             }
         });
     }

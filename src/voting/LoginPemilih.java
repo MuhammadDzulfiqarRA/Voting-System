@@ -1,27 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package voting;
 
-import Controller.VoteDB;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-/**
- *
- * @author alang
- */
-public class MasukPemilih extends javax.swing.JFrame {
+import controller.VoteDB;
+
+public class LoginPemilih extends javax.swing.JFrame {
+    public static User user;
+    public static  DashboardPemilih utamaPanel;
     private VoteDB voteDB;
     /**
      * Creates new form Masuk
      */
-    public MasukPemilih() {
+    public LoginPemilih() {
+        user = new User();
         voteDB = new VoteDB();
         initComponents();
     }
@@ -42,7 +31,6 @@ public class MasukPemilih extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,10 +55,6 @@ public class MasukPemilih extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel5.setText("*harap masukkan NAMA dan NIK sesuai KTP");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,17 +70,15 @@ public class MasukPemilih extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3)
-                                .addComponent(jTextField1)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(101, 101, 101)
-                                .addComponent(jButton1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))))
-                .addContainerGap(67, Short.MAX_VALUE))
+                            .addComponent(jTextField2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(jButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,68 +89,34 @@ public class MasukPemilih extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(jButton1)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String nik = jTextField1.getText();
         String nama = jTextField2.getText();
-        String password = jTextField1.getText();
         
         // Verifikasi NIK dan umur
-        if (verifikasiNik(password, nama)) {
+        if (voteDB.verifikasiNikDanUmur(nik, nama)) {
             // NIK dan umur valid, lanjutkan ke form selanjutnya
-            DashboardPemilih utamaPanel = new DashboardPemilih(password, nama);
+            utamaPanel = new DashboardPemilih();
+            utamaPanel.countdown = 180;
             utamaPanel.setVisible(true);
             this.dispose();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private boolean verifikasiNik(String password, String nama) {
-    try (Connection connection = VoteDB.getConnection()) {
-        // Lakukan verifikasi terhadap nama dan password pada tabel 'masuk'
-        String queryMasuk = "SELECT * FROM masuk WHERE password = ? AND username = ?";
-
-        try (PreparedStatement masukStatement = connection.prepareStatement(queryMasuk)) {
-            masukStatement.setString(1, password);
-            masukStatement.setString(2, nama);
-
-            try (ResultSet masukResultSet = masukStatement.executeQuery()) {
-                if (masukResultSet.next()) {
-                    JOptionPane.showMessageDialog(this, "Terverifikasi");
-                    // Beralih ke DashboardPemilih setelah verifikasi
-                    DashboardPemilih utamaPanel = new DashboardPemilih(password, nama);
-                    utamaPanel.setVisible(true);
-                    // Menutup frame saat ini (MasukPemilih)
-                    this.dispose();
-                    return true;
-                } else {
-                    JOptionPane.showMessageDialog(this, "Tidak terverifikasi - Nama atau NIK tidak terdaftar di 'masuk'");
-                }
-            }
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Terjadi kesalahan dalam koneksi database: " + e.getMessage());
     }
 
-    return false;
-}
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -183,13 +131,13 @@ public class MasukPemilih extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MasukPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MasukPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MasukPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MasukPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -197,7 +145,7 @@ public class MasukPemilih extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MasukPemilih().setVisible(true);
+                new LoginPemilih().setVisible(true);
             }
         });
     }
@@ -208,7 +156,6 @@ public class MasukPemilih extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

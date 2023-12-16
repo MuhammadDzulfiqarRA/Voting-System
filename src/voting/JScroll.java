@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package voting;
 
 import java.util.Timer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-/**
- *
- * @author alang
- */
 public class JScroll extends javax.swing.JPanel {
     private Timer sessionTimer;
     private int sessionDuration = 60;
