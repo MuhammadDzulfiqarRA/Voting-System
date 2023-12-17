@@ -2,7 +2,7 @@ package voting;
 
 import controller.VoteDB;
 
-public class LoginPemilih extends javax.swing.JFrame {
+public class LoginPemilih extends javax.swing.JFrame implements LoginInterface{
     public static User user;
     public static  DashboardPemilih utamaPanel;
     private VoteDB voteDB;
@@ -51,7 +51,7 @@ public class LoginPemilih extends javax.swing.JFrame {
         jButton1.setText("KONFIRMASI");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                confirmLoginActionPerformed(evt);
             }
         });
 
@@ -103,7 +103,7 @@ public class LoginPemilih extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    public void confirmLoginActionPerformed(java.awt.event.ActionEvent evt) {
         String nik = jTextField1.getText();
         String nama = jTextField2.getText();
         

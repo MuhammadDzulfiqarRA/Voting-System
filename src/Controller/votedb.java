@@ -83,20 +83,6 @@ public class VoteDB {
         }
         return false;
     }
-        
-    //kayanya method yg ini gaperlu gasi? apa gimanaa
-    public void setPaslonVoteCount(Paslon paslon, int nomor_urut){
-        String queryPaslon = "UPDATE paslon SET vote_number = ? WHERE nomor_urut = ?";
-        try (PreparedStatement paslonStatement = conn.prepareStatement(queryPaslon)){
-            int vote = paslon.getVoteNumber();
-            paslonStatement.setInt(1, vote+1);
-            paslonStatement.setInt(2, nomor_urut);
-            paslon.setVoteNumber(vote);
-            paslon.setNomorUrut(nomor_urut);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Terjadi kesalahan dalam koneksi database: " + e.getMessage());
-        }
-    }
 
     public void vote(String nama, int umur, String nik, Paslon paslon, int nomorUrut) {
         try {
@@ -108,14 +94,6 @@ public class VoteDB {
                 updVoteStatement.executeUpdate();
                 LoginPemilih.user.setVoteNumber(nomorUrut);
                 JOptionPane.showMessageDialog(null, "Terima kasih atas partisipasi Anda!");    
-                        // try (ResultSet result = insertVoteStatement.executeQuery()){
-                        //     if(result.next()){
-                        //     }else{
-                        //         JOptionPane.showConfirmDialog(null, "Gagal mengeksekusi query.");
-                        //     }
-                        // } catch (Exception e) {
-                        //     // TODO: handle exception
-                        // }
             }
             String updateVoteQuery = "UPDATE paslon SET jumlah_vote = ? WHERE nomor_urut = ?";
             try (PreparedStatement updateVoteStatement = conn.prepareStatement(updateVoteQuery)) {
@@ -152,16 +130,6 @@ public class VoteDB {
             }
         } catch (Exception e) {
             
-        }
-    }
-    
-    private boolean hasVoted(String nik) throws SQLException {
-        String query = "SELECT * FROM pemilih WHERE nik = ?";
-        try (PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, nik);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                return resultSet.next();
-            }
         }
     }
     

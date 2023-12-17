@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import controller.VoteDB;
 
-public class LoginAdmin extends javax.swing.JFrame {
+public class LoginAdmin extends javax.swing.JFrame implements LoginInterface{
 
     public static Admin admin;
     private VoteDB voteDB;
@@ -48,7 +48,7 @@ public class LoginAdmin extends javax.swing.JFrame {
         Kfrm2.setText("KONFIRMASI");
         Kfrm2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Kfrm2ActionPerformed(evt);
+                confirmLoginActionPerformed(evt);
             }
         });
 
@@ -105,11 +105,9 @@ public class LoginAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void Kfrm2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Kfrm2ActionPerformed
-        // TODO add your handling code here:
+    public void confirmLoginActionPerformed(java.awt.event.ActionEvent evt) {
         String username = Usrnm.getText();
         String password = Pswd.getText();
-
         // Pengecekan login
             if (voteDB.checkLoginAdmin(username, password)) {
                 // Jika login sukses, beralih ke dashboard saksi

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2023 at 09:40 PM
+-- Generation Time: Dec 17, 2023 at 02:43 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.0.28
 
@@ -59,9 +59,9 @@ CREATE TABLE `paslon` (
 --
 
 INSERT INTO `paslon` (`id_paslon`, `nama_capres`, `nama_cawapres`, `nomor_urut`, `jumlah_vote`) VALUES
-(1, 'Anies Rasyid Baswedan', 'Muhaimin Iskandar', 1, 21),
-(2, 'Prabowo Subianto', 'Gibran Rakabuming Raka', 2, 15),
-(3, 'Ganjar Pranowo', 'Mahfud MD', 3, 25);
+(1, 'Anies Rasyid Baswedan', 'Muhaimin Iskandar', 1, 3),
+(2, 'Prabowo Subianto', 'Gibran Rakabuming Raka', 2, 1),
+(3, 'Ganjar Pranowo', 'Mahfud MD', 3, 2);
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,7 @@ CREATE TABLE `pemilih` (
   `nik` varchar(20) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `umur` int(11) NOT NULL,
-  `vote_number` int(11) DEFAULT NULL
+  `vote_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -82,8 +82,12 @@ CREATE TABLE `pemilih` (
 --
 
 INSERT INTO `pemilih` (`id_pemilih`, `nik`, `nama`, `umur`, `vote_number`) VALUES
-(1, '5203070103020003', 'Alang Artha Iwana', 20, 0),
-(2, '5203070103020004', 'Nimas Sekararum Kinanthi', 19, 2);
+(1, '52710446070001', 'Alang Artha Iwana', 20, 1),
+(2, '52710446070002', 'Nimas Sekararum Kinanthi', 19, 2),
+(6, '52710446070003', 'Muhammad Dzulfiqar', 25, 3),
+(7, '52710446070004', 'Ghina Briliana', 19, 3),
+(8, '52710446070005', 'Baiq Anggita', 24, 1),
+(9, '52710446070006', 'Tsabitah Aliyah', 17, 1);
 
 --
 -- Indexes for dumped tables
@@ -128,7 +132,7 @@ ALTER TABLE `paslon`
 -- AUTO_INCREMENT for table `pemilih`
 --
 ALTER TABLE `pemilih`
-  MODIFY `id_pemilih` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pemilih` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
