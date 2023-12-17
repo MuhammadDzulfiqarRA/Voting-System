@@ -3,7 +3,6 @@ package voting;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -28,8 +27,6 @@ public class DashboardPemilih extends javax.swing.JFrame {
         startCountDown2();
     }
 
-    @SuppressWarnings("unchecked")
-    
     private void initComponents() {
 
         jPanel5 = new javax.swing.JPanel();
@@ -378,11 +375,6 @@ public class DashboardPemilih extends javax.swing.JFrame {
     }
     
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -399,9 +391,7 @@ public class DashboardPemilih extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DashboardPemilih.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new DashboardPemilih().setVisible(true);
@@ -409,7 +399,6 @@ public class DashboardPemilih extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel fotoPaslon1;
     private javax.swing.JLabel fotoPaslon2;
     private javax.swing.JLabel fotoPaslon3;
@@ -432,5 +421,4 @@ public class DashboardPemilih extends javax.swing.JFrame {
     private javax.swing.JLabel sessionTimeCountdownLabel;
     private javax.swing.JLabel sessionTimeLabel;
     private javax.swing.JButton voteNowButton;
-    // End of variables declaration//GEN-END:variables
 }

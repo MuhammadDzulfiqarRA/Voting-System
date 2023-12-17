@@ -1,9 +1,6 @@
 package voting;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import controller.VoteDB;
 
@@ -11,16 +8,12 @@ public class VoteJPanel extends javax.swing.JFrame {
     
     private VoteDB voteDB;
     private boolean sudahMemilih = false;
-    /**
-     * Creates new form VoteJPanel1
-     */
+    
     public VoteJPanel() {
         voteDB = new VoteDB();
         System.out.println(LoginPemilih.user.getNik());
         initComponents();
     }
-
-    @SuppressWarnings("unchecked")
     
     private void initComponents() {
 
@@ -111,12 +104,12 @@ public class VoteJPanel extends javax.swing.JFrame {
         pack();
     }
     
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         // Tutup frame saat ini (VoteJPanel)
         this.dispose();
     }
     
-    private void Btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn1ActionPerformed
+    private void Btn1ActionPerformed(java.awt.event.ActionEvent evt) {
         if (!sudahMemilih) {
             konfirmasiVoting(Utama.anies, 1);
         } else {
@@ -124,7 +117,7 @@ public class VoteJPanel extends javax.swing.JFrame {
         }
     }
     
-    private void Btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn2ActionPerformed
+    private void Btn2ActionPerformed(java.awt.event.ActionEvent evt) {
         if (!sudahMemilih) {
             konfirmasiVoting(Utama.prabowo, 2);
         } else {
@@ -132,7 +125,7 @@ public class VoteJPanel extends javax.swing.JFrame {
         }
     }
     
-    private void Btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn3ActionPerformed
+    private void Btn3ActionPerformed(java.awt.event.ActionEvent evt) {
         if (!sudahMemilih) {
             konfirmasiVoting(Utama.ganjar, 3);
         } else {
@@ -156,11 +149,6 @@ public class VoteJPanel extends javax.swing.JFrame {
     }
     
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -177,8 +165,6 @@ public class VoteJPanel extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VoteJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         try {
         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {
@@ -190,7 +176,6 @@ public class VoteJPanel extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VoteJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
             new VoteJPanel().setVisible(true);
@@ -198,11 +183,9 @@ public class VoteJPanel extends javax.swing.JFrame {
     });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn1;
     private javax.swing.JButton Btn2;
     private javax.swing.JButton Btn3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    // End of variables declaration//GEN-END:variables
 }

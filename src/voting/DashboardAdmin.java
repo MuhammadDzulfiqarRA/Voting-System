@@ -8,7 +8,6 @@ import controller.VoteDB;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 public class DashboardAdmin extends javax.swing.JFrame {
@@ -22,8 +21,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
-    
     private void initComponents() {
 
         paslon1AdminPanel = new javax.swing.JPanel();
@@ -276,11 +273,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }
     
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -297,9 +289,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new DashboardAdmin().setVisible(true);
@@ -307,7 +297,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adminMessageLabel;
     private javax.swing.JLabel adminNameLabel;
     private javax.swing.JLabel fotoPaslon1Admin;
@@ -330,5 +319,4 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel totalVotePaslon2Number;
     private javax.swing.JLabel totalVotePaslon3;
     private javax.swing.JLabel totalVotePaslon3Number;
-    // End of variables declaration//GEN-END:variables
 }

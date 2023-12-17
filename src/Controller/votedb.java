@@ -117,10 +117,10 @@ public class VoteDB {
         }
     }
     
-    public void getPaslonVoteCount(Paslon paslon, int nomor_urut){
+    public void getPaslonVoteCount(Paslon paslon, int nomorUrut){
         String selectQuery = "SELECT jumlah_vote FROM paslon WHERE nomor_urut = ?";
         try (PreparedStatement paslonStatement = conn.prepareStatement(selectQuery)){
-            paslonStatement.setInt(1, nomor_urut);
+            paslonStatement.setInt(1, nomorUrut);
             try (ResultSet resultSet = paslonStatement.executeQuery()){
                 if (resultSet.next()){
                     paslon.setVoteNumber(resultSet.getInt("jumlah_vote"));
