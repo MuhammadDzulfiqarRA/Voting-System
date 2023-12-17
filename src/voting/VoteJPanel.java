@@ -11,7 +11,6 @@ public class VoteJPanel extends javax.swing.JFrame {
     
     public VoteJPanel() {
         voteDB = new VoteDB();
-        System.out.println(LoginPemilih.user.getNik());
         initComponents();
     }
     

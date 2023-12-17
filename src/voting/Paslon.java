@@ -1,6 +1,6 @@
 package voting;
 
-public class Paslon {
+public class Paslon extends Abstract{
    private int nomorUrut;
    private int voteNumber;
    

@@ -1,6 +1,6 @@
 package voting;
 
-public class User {
+public class User extends Abstract{
    private String nik;
    private String nama;
    private int umur;
